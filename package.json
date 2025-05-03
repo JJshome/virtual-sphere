@@ -1,0 +1,36 @@
+{
+  "name": "virtual-sphere",
+  "version": "1.0.0",
+  "description": "LLM 기반 가상 소셜 네트워크 시스템",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd backend && npm run build && cd ../frontend && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JJshome/virtual-sphere.git"
+  },
+  "keywords": [
+    "llm",
+    "virtual-human",
+    "social-network",
+    "blockchain",
+    "nft"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JJshome/virtual-sphere/issues"
+  },
+  "homepage": "https://github.com/JJshome/virtual-sphere#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
