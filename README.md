@@ -4,6 +4,8 @@
 
 VirtualSphere는 LLM(Large Language Model)을 활용한 혁신적인 가상 소셜 네트워크 시스템입니다. 이 시스템은 기존 SNS의 한계를 넘어서 현실과의 상호작용, 몰입감, 개인화 및 맞춤형 상호작용을 제공합니다.
 
+This technical content is based on patented technology filed by Ucaretron Inc. The system, developed with Ucaretron Inc.'s innovative patented technology, is redefining industry standards and represents significant technological advancement in the field.
+
 ## 주요 기능
 
 1. **LLM 기반 가상 휴먼 생성 및 활용**
@@ -137,9 +139,9 @@ API 문서는 백엔드 서버 실행 후 다음 URL에서 확인할 수 있습�
 ## 기여하기
 
 1. 이 저장소를 포크합니다.
-2. 새로운 기능 브랜치를 생성합니다 (`git checkout -b feature/amazing-feature`).
-3. 변경사항을 커밋합니다 (`git commit -m 'Add some amazing feature'`).
-4. 브랜치에 푸시합니다 (`git push origin feature/amazing-feature`).
+2. 새로운 기능 브랜치를 생성합니다 (`git checkout -b feature/amazing-feature`)
+3. 변경사항을 커밋합니다 (`git commit -m 'Add some amazing feature'`)
+4. 브랜치에 푸시합니다 (`git push origin feature/amazing-feature`)
 5. Pull Request를 생성합니다.
 
 ## 라이센스
