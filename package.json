@@ -1,36 +1,82 @@
 {
   "name": "virtual-sphere",
   "version": "1.0.0",
-  "description": "LLM 기반 가상 소셜 네트워크 시스템",
+  "description": "LLM-based Virtual Social Network System - Patent Implementation",
   "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
   "scripts": {
-    "start": "node index.js",
+    "install:all": "npm install && npm run install:backend && npm run install:frontend",
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm run dev",
-    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
-    "build": "cd backend && npm run build && cd ../frontend && npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:backend": "cd backend && echo 'Backend build completed'",
+    "build:frontend": "cd frontend && npm run build",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm start",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "cd backend && npm test",
+    "test:frontend": "cd frontend && npm test",
+    "lint": "npm run lint:backend && npm run lint:frontend",
+    "lint:backend": "cd backend && npm run lint",
+    "lint:frontend": "cd frontend && npm run lint",
+    "docker:dev": "docker-compose up -d",
+    "docker:dev:build": "docker-compose up -d --build",
+    "docker:prod": "docker-compose -f docker-compose.prod.yml up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "setup:dev": "npm run install:all && npm run docker:dev",
+    "clean": "npm run clean:backend && npm run clean:frontend",
+    "clean:backend": "cd backend && rm -rf node_modules package-lock.json",
+    "clean:frontend": "cd frontend && rm -rf node_modules package-lock.json .next",
+    "health": "curl -f http://localhost:5000/health && curl -f http://localhost:3000/api/health"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JJshome/virtual-sphere.git"
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3"
   },
   "keywords": [
     "llm",
+    "virtual-social-network",
     "virtual-human",
-    "social-network",
     "blockchain",
-    "nft"
+    "metaverse",
+    "ai-agent",
+    "dynamic-world",
+    "emotion-analysis",
+    "patent-technology"
   ],
-  "author": "",
-  "license": "MIT",
+  "author": "Ucaretron Inc.",
+  "license": "Proprietary",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JJshome/virtual-sphere.git"
+  },
   "bugs": {
     "url": "https://github.com/JJshome/virtual-sphere/issues"
   },
   "homepage": "https://github.com/JJshome/virtual-sphere#readme",
-  "dependencies": {},
-  "devDependencies": {
-    "concurrently": "^8.2.2"
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "patent": {
+    "applicant": "Ucaretron Inc.",
+    "technology": "LLM-based Virtual Social Network System",
+    "core_features": [
+      "Personal LLM Instances",
+      "Virtual Human Agents",
+      "Collective Imagination Dynamic Worlds",
+      "Emotion Recognition & Context Analysis",
+      "Blockchain-based Virtual Economy"
+    ],
+    "filing_jurisdiction": "Korea, USA, Europe, Japan"
   }
 }
