@@ -13,7 +13,7 @@ VirtualSphere는 **Ucaretron Inc.**가 개발한 혁신적인 특허 기술을 �
 
 ## 🚀 핵심 특허 기술
 
-### 1. 개인별 LLM 인스턴스 시스템 (Patent Core)
+### 1. 개인별 LLM 인스턴스 시스템 
 - **기술적 혁신**: 각 사용자마다 완전히 개인화된 LLM 인스턴스 생성
 - **특허 포인트**: 사용자 성향, 감정 패턴, 학습 이력을 반영한 동적 LLM 개인화
 - **표준화**: LLM Instance Protocol (LIP) 구현
@@ -28,7 +28,7 @@ const personalLLM = await LLMOrchestrator.createPersonalLLMInstance(userId, {
 });
 ```
 
-### 2. 자율적 가상 휴먼 에이전트 (Patent Core)
+### 2. 자율적 가상 휴먼 에이전트 
 - **기술적 혁신**: 사용자를 대신하여 자율적으로 활동하는 지능형 가상 휴먼
 - **특허 포인트**: 사용자 부재 시에도 지속적인 소셜 활동 및 학습 수행
 - **표준화**: Virtual Human Agent Protocol (VHAP) 구현
@@ -43,17 +43,17 @@ const virtualHuman = await VirtualHumanService.createVirtualHuman(userId, {
 });
 ```
 
-### 3. 집단 상상력 기반 동적 세계 생성 (Patent Core)
+### 3. 집단 상상력 기반 동적 세계 생성 
 - **기술적 혁신**: 사용자들의 집단 상상력을 실시간으로 가상 세계에 반영
 - **특허 포인트**: 다중 센서 융합 및 감정 인식을 통한 동적 환경 변화
 - **표준화**: Dynamic World State Protocol (DWSP) 구현
 
-### 4. 실시간 감정/상황 인식 시스템 (Patent Core)
+### 4. 실시간 감정/상황 인식 시스템 
 - **기술적 혁신**: 사용자의 감정과 상황을 실시간 분석하여 맞춤형 반응 제공  
 - **특허 포인트**: CNN-LSTM 하이브리드 모델을 통한 다중 모달 감정 분석
 - **표준화**: Emotion Analysis Standard (EAS) 구현
 
-### 5. 블록체인 기반 가상 경제 시스템 (Patent Implementation)
+### 5. 블록체인 기반 가상 경제 시스템
 - **기술적 혁신**: 협업 성과를 NFT로 보상하는 탈중앙화 경제 시스템
 - **특허 포인트**: 가상 자산의 실제 경제적 가치 연동 메커니즘
 - **표준화**: Virtual Asset Standard (VAS) 구현
@@ -66,7 +66,7 @@ const virtualHuman = await VirtualHumanService.createVirtualHuman(userId, {
 
 ## 🛠️ 기술 스택
 
-### Backend (특허 핵심 구현)
+### Backend
 - **Node.js + Express.js**: 고성능 API 서버
 - **MongoDB**: 사용자 및 LLM 인스턴스 데이터
 - **Redis**: 실시간 캐싱 및 세션 관리
@@ -75,7 +75,7 @@ const virtualHuman = await VirtualHumanService.createVirtualHuman(userId, {
 - **Socket.IO**: 실시간 가상 휴먼 상호작용
 - **Web3.js**: 블록체인 통합 및 NFT 관리
 
-### Frontend (사용자 인터페이스)
+### Frontend
 - **Next.js + React**: 현대적 웹 애플리케이션
 - **Material-UI**: 세련된 사용자 인터페이스
 - **Three.js**: 3D 가상 휴먼 렌더링
