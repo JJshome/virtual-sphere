@@ -1,299 +1,245 @@
 const mongoose = require('mongoose');
 
-const EmotionDataSchema = new mongoose.Schema({
+const emotionDataSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
+    index: true
   },
-  virtualHumanId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'VirtualHuman'
-  },
+  
   dataType: {
     type: String,
-    enum: ['biometric', 'facial', 'voice', 'text', 'behavior', 'composite'],
+    enum: ['facial', 'voice', 'text', 'physiological', 'composite'],
     required: true
   },
-  rawData: {
-    // Biometric data
-    eeg: {
-      channels: [{ 
-        name: String, 
-        values: [Number],
-        timestamp: Date
-      }],
-      dominantWave: {
-        type: String,
-        enum: ['delta', 'theta', 'alpha', 'beta', 'gamma']
-      }
+  
+  emotions: {
+    happy: { type: Number, min: 0, max: 1, default: 0 },
+    sad: { type: Number, min: 0, max: 1, default: 0 },
+    angry: { type: Number, min: 0, max: 1, default: 0 },
+    fear: { type: Number, min: 0, max: 1, default: 0 },
+    surprise: { type: Number, min: 0, max: 1, default: 0 },
+    disgust: { type: Number, min: 0, max: 1, default: 0 },
+    neutral: { type: Number, min: 0, max: 1, default: 0 }
+  },
+  
+  primaryEmotion: {
+    type: String,
+    enum: ['happy', 'sad', 'angry', 'fear', 'surprise', 'disgust', 'neutral'],
+    required: true
+  },
+  
+  confidence: {
+    type: Number,
+    min: 0,
+    max: 1,
+    required: true
+  },
+  
+  emotionalComplexity: {
+    type: Number,
+    min: 0,
+    max: 1,
+    default: 0
+  },
+  
+  context: {
+    activity: {
+      type: String,
+      enum: ['work', 'social', 'personal', 'entertainment', 'other'],
+      default: 'other'
     },
-    heartRate: {
-      bpm: Number,
-      variability: Number,
-      timestamp: Date
+    location: {
+      type: String,
+      default: 'unknown'
     },
-    eyeTracking: {
-      pupilDilation: Number,
-      gazePattern: [{
-        x: Number,
-        y: Number,
-        timestamp: Date
-      }],
-      blinkRate: Number
-    },
-    // Facial expression data
-    facial: {
-      expressions: {
-        happiness: { type: Number, min: 0, max: 1 },
-        sadness: { type: Number, min: 0, max: 1 },
-        anger: { type: Number, min: 0, max: 1 },
-        surprise: { type: Number, min: 0, max: 1 },
-        fear: { type: Number, min: 0, max: 1 },
-        disgust: { type: Number, min: 0, max: 1 },
-        contempt: { type: Number, min: 0, max: 1 },
-        neutral: { type: Number, min: 0, max: 1 }
-      },
-      actionUnits: [{ 
-        au: String, 
-        intensity: Number 
-      }],
-      headPose: {
-        pitch: Number,
-        yaw: Number,
-        roll: Number
-      }
-    },
-    // Voice analysis
-    voice: {
-      pitch: {
-        mean: Number,
-        variance: Number
-      },
-      energy: Number,
-      speakingRate: Number,
-      pauseFrequency: Number,
-      emotionalTone: {
-        valence: { type: Number, min: -1, max: 1 },
-        arousal: { type: Number, min: 0, max: 1 }
-      }
-    },
-    // Text sentiment
-    text: {
-      content: String,
-      sentiment: {
-        polarity: { type: Number, min: -1, max: 1 },
-        subjectivity: { type: Number, min: 0, max: 1 }
-      },
-      keywords: [String],
-      emotionalWords: [{
-        word: String,
-        emotion: String,
-        intensity: Number
-      }]
-    },
-    // Behavioral patterns
-    behavior: {
-      interactionFrequency: Number,
-      responseTime: Number, // milliseconds
-      activityLevel: { type: Number, min: 0, max: 1 },
-      socialEngagement: { type: Number, min: 0, max: 1 },
-      focusDuration: Number // seconds
+    environmentalFactors: [{
+      type: String
+    }],
+    socialContext: {
+      alone: { type: Boolean, default: true },
+      peopleCount: { type: Number, default: 0 },
+      relationships: [String]
     }
   },
-  processedEmotion: {
-    primary: {
-      emotion: {
-        type: String,
-        enum: ['happiness', 'sadness', 'anger', 'fear', 'surprise', 'disgust', 'neutral', 'complex']
-      },
-      confidence: { type: Number, min: 0, max: 1 }
+  
+  privacy: {
+    shareLevel: {
+      type: String,
+      enum: ['private', 'friends', 'public'],
+      default: 'private'
     },
-    secondary: {
-      emotion: String,
-      confidence: { type: Number, min: 0, max: 1 }
+    anonymized: {
+      type: Boolean,
+      default: false
     },
-    valence: { type: Number, min: -1, max: 1 }, // Positive/Negative
-    arousal: { type: Number, min: 0, max: 1 }, // Calm/Excited
-    dominance: { type: Number, min: 0, max: 1 }, // Submissive/Dominant
-    // Complex emotional states
-    emotionalBlend: [{
-      emotion: String,
-      weight: { type: Number, min: 0, max: 1 }
-    }],
-    // Contextual modifiers
-    context: {
-      situation: String,
-      socialContext: String,
-      environmentalFactors: [String]
+    dataRetentionDays: {
+      type: Number,
+      default: 90
     }
   },
-  analysis: {
-    // AI-generated insights
-    insights: [{
-      type: {
-        type: String,
-        enum: ['pattern', 'anomaly', 'trend', 'recommendation']
-      },
-      description: String,
-      confidence: { type: Number, min: 0, max: 1 },
-      timestamp: Date
-    }],
-    // Emotion trajectory
-    trajectory: {
-      direction: {
-        type: String,
-        enum: ['improving', 'declining', 'stable', 'fluctuating']
-      },
-      velocity: Number, // Rate of change
-      prediction: {
-        nextLikely: String,
-        probability: { type: Number, min: 0, max: 1 },
-        timeframe: Number // minutes
-      }
-    },
-    // Correlations with activities
-    activityCorrelations: [{
-      activity: String,
-      correlation: { type: Number, min: -1, max: 1 },
-      sampleSize: Number
-    }]
-  },
+  
   metadata: {
-    captureDevice: String,
-    captureQuality: { type: Number, min: 0, max: 1 },
-    environmentConditions: {
-      lighting: String,
-      noise: String,
-      temperature: Number
+    processingModel: {
+      type: String,
+      default: 'gpt-4'
     },
-    sessionId: String,
+    processingTime: {
+      type: Number // milliseconds
+    },
+    sourceDevice: {
+      type: String
+    },
+    sessionId: {
+      type: String
+    },
     tags: [String]
   },
-  privacy: {
-    consentGiven: { type: Boolean, required: true },
-    dataRetentionDays: { type: Number, default: 30 },
-    anonymized: { type: Boolean, default: false },
-    sharingPermissions: {
-      research: { type: Boolean, default: false },
-      improvement: { type: Boolean, default: true },
-      thirdParty: { type: Boolean, default: false }
+  
+  insights: [{
+    type: {
+      type: String,
+      enum: ['trend', 'warning', 'info', 'success', 'analysis', 'suggestion', 'alert']
+    },
+    message: String,
+    priority: {
+      type: String,
+      enum: ['low', 'medium', 'high'],
+      default: 'medium'
+    },
+    recommendation: String,
+    metadata: mongoose.Schema.Types.Mixed,
+    createdAt: {
+      type: Date,
+      default: Date.now
     }
-  },
-  timestamp: { type: Date, default: Date.now },
-  expiresAt: { type: Date, index: { expireAfterSeconds: 0 } }
+  }],
+  
+  timestamp: {
+    type: Date,
+    default: Date.now,
+    index: true
+  }
+}, {
+  timestamps: true
 });
 
-// Methods
-EmotionDataSchema.methods.anonymize = function() {
-  this.userId = null;
-  this.rawData.text = { content: '[REDACTED]' };
-  this.metadata.sessionId = '[ANONYMIZED]';
+// Indexes for efficient querying
+emotionDataSchema.index({ userId: 1, timestamp: -1 });
+emotionDataSchema.index({ userId: 1, primaryEmotion: 1 });
+emotionDataSchema.index({ userId: 1, dataType: 1 });
+emotionDataSchema.index({ 'privacy.anonymized': 1 });
+emotionDataSchema.index({ 'context.activity': 1 });
+
+// Virtual for emotion intensity
+emotionDataSchema.virtual('emotionIntensity').get(function() {
+  const emotions = this.emotions;
+  const max = Math.max(...Object.values(emotions));
+  return max;
+});
+
+// Method to anonymize data
+emotionDataSchema.methods.anonymize = function() {
   this.privacy.anonymized = true;
-  return this.save();
-};
-
-EmotionDataSchema.methods.calculateEmotionalComplexity = function() {
-  if (!this.processedEmotion.emotionalBlend) return 0;
-  
-  const blendCount = this.processedEmotion.emotionalBlend.length;
-  const weights = this.processedEmotion.emotionalBlend.map(e => e.weight);
-  const entropy = weights.reduce((sum, w) => {
-    if (w > 0) {
-      return sum - (w * Math.log2(w));
-    }
-    return sum;
-  }, 0);
-  
-  return {
-    blendCount,
-    entropy,
-    complexity: entropy / Math.log2(blendCount || 1)
+  this.context.location = 'anonymized';
+  this.context.socialContext = {
+    alone: true,
+    peopleCount: 0,
+    relationships: []
   };
-};
-
-EmotionDataSchema.methods.generateInsights = async function() {
-  const insights = [];
-  
-  // Check for emotional patterns
-  if (this.processedEmotion.arousal > 0.8 && this.processedEmotion.valence < -0.5) {
-    insights.push({
-      type: 'pattern',
-      description: 'High stress pattern detected - high arousal with negative valence',
-      confidence: 0.85,
-      timestamp: new Date()
-    });
-  }
-  
-  // Check for anomalies
-  if (this.rawData.heartRate && this.rawData.heartRate.bpm > 120) {
-    insights.push({
-      type: 'anomaly',
-      description: 'Elevated heart rate detected during emotional capture',
-      confidence: 0.9,
-      timestamp: new Date()
-    });
-  }
-  
-  // Generate recommendations
-  if (this.processedEmotion.primary.emotion === 'sadness' && 
-      this.processedEmotion.primary.confidence > 0.7) {
-    insights.push({
-      type: 'recommendation',
-      description: 'Consider engaging in uplifting activities or social interactions',
-      confidence: 0.7,
-      timestamp: new Date()
-    });
-  }
-  
-  this.analysis.insights = insights;
+  this.metadata.sourceDevice = 'anonymized';
+  this.metadata.sessionId = 'anonymized';
   return this.save();
 };
 
-// Static methods
-EmotionDataSchema.statics.aggregateEmotions = async function(userIds, timeRange) {
-  const pipeline = [
+// Method to check if data should be deleted
+emotionDataSchema.methods.shouldBeDeleted = function() {
+  const retentionDays = this.privacy.dataRetentionDays;
+  const createdDate = new Date(this.createdAt);
+  const expiryDate = new Date(createdDate.getTime() + retentionDays * 24 * 60 * 60 * 1000);
+  return new Date() > expiryDate;
+};
+
+// Static method to clean up old data
+emotionDataSchema.statics.cleanupOldData = async function() {
+  const cutoffDate = new Date();
+  cutoffDate.setDate(cutoffDate.getDate() - 90); // Default 90 days
+  
+  const result = await this.deleteMany({
+    timestamp: { $lt: cutoffDate },
+    'privacy.anonymized': false
+  });
+  
+  return result.deletedCount;
+};
+
+// Static method to get emotion statistics
+emotionDataSchema.statics.getEmotionStats = async function(userId, startDate, endDate) {
+  const match = {
+    userId: mongoose.Types.ObjectId(userId),
+    timestamp: {
+      $gte: startDate,
+      $lte: endDate
+    }
+  };
+  
+  const stats = await this.aggregate([
+    { $match: match },
     {
-      $match: {
-        userId: { $in: userIds },
-        timestamp: {
-          $gte: timeRange.start,
-          $lte: timeRange.end
-        }
+      $group: {
+        _id: '$primaryEmotion',
+        count: { $sum: 1 },
+        avgConfidence: { $avg: '$confidence' },
+        avgComplexity: { $avg: '$emotionalComplexity' }
       }
     },
     {
-      $group: {
-        _id: null,
-        avgValence: { $avg: '$processedEmotion.valence' },
-        avgArousal: { $avg: '$processedEmotion.arousal' },
-        dominantEmotions: { $push: '$processedEmotion.primary.emotion' },
-        count: { $sum: 1 }
+      $project: {
+        emotion: '$_id',
+        count: 1,
+        avgConfidence: { $round: ['$avgConfidence', 2] },
+        avgComplexity: { $round: ['$avgComplexity', 2] },
+        _id: 0
       }
-    }
-  ];
+    },
+    { $sort: { count: -1 } }
+  ]);
   
-  return this.aggregate(pipeline);
+  return stats;
 };
 
-// Indexes
-EmotionDataSchema.index({ userId: 1, timestamp: -1 });
-EmotionDataSchema.index({ virtualHumanId: 1, timestamp: -1 });
-EmotionDataSchema.index({ 'processedEmotion.primary.emotion': 1 });
-EmotionDataSchema.index({ dataType: 1, timestamp: -1 });
-EmotionDataSchema.index({ 'metadata.sessionId': 1 });
-
-// TTL index for automatic data expiration
-EmotionDataSchema.index({ timestamp: 1 }, { 
-  expireAfterSeconds: 30 * 24 * 60 * 60 // 30 days default
-});
-
-// Pre-save hook to set expiration date
-EmotionDataSchema.pre('save', function(next) {
-  if (!this.expiresAt && this.privacy.dataRetentionDays) {
-    this.expiresAt = new Date(Date.now() + this.privacy.dataRetentionDays * 24 * 60 * 60 * 1000);
+// Pre-save hook to ensure emotion scores sum to 1
+emotionDataSchema.pre('save', function(next) {
+  const emotions = this.emotions;
+  const sum = Object.values(emotions).reduce((a, b) => a + b, 0);
+  
+  if (sum > 0 && Math.abs(sum - 1) > 0.01) {
+    // Normalize emotions to sum to 1
+    Object.keys(emotions).forEach(key => {
+      emotions[key] = emotions[key] / sum;
+    });
   }
+  
   next();
 });
 
-module.exports = mongoose.model('EmotionData', EmotionDataSchema);
+// Method to export data for user
+emotionDataSchema.methods.exportData = function() {
+  const exported = this.toObject();
+  
+  // Remove sensitive information if anonymized
+  if (this.privacy.anonymized) {
+    delete exported.metadata.sourceDevice;
+    delete exported.metadata.sessionId;
+    exported.context.location = 'anonymized';
+  }
+  
+  // Remove internal fields
+  delete exported.__v;
+  delete exported._id;
+  
+  return exported;
+};
+
+module.exports = mongoose.model('EmotionData', emotionDataSchema);
