@@ -103,6 +103,35 @@ const UserSchema = new mongoose.Schema({
     lastAnalysis: Date
   },
   
+  // Patent Core: Emotion Profile (Enhanced)
+  emotionProfile: {
+    emotionHistory: [{
+      emotionId: { type: mongoose.Schema.Types.ObjectId, ref: 'EmotionData' },
+      timestamp: Date,
+      primaryEmotion: String
+    }],
+    dominantEmotions: {
+      type: Map,
+      of: Number
+    },
+    averageComplexity: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 1
+    },
+    emotionalStability: {
+      type: Number,
+      default: 0.5,
+      min: 0,
+      max: 1
+    },
+    lastUpdated: {
+      type: Date,
+      default: Date.now
+    }
+  },
+  
   // Patent Core: Collaboration History
   collaborationHistory: [{
     projectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Project' },
@@ -144,7 +173,8 @@ const UserSchema = new mongoose.Schema({
   privacy: {
     profileVisibility: { type: String, enum: ['public', 'friends', 'private'], default: 'public' },
     dataSharing: { type: Boolean, default: false },
-    analyticsOptIn: { type: Boolean, default: true }
+    analyticsOptIn: { type: Boolean, default: true },
+    emotionDataSharing: { type: String, enum: ['private', 'friends', 'public'], default: 'private' }
   },
   
   // System Settings
@@ -197,6 +227,17 @@ UserSchema.pre('save', async function(next) {
   // Update last seen
   if (this.isModified('onlineStatus') && this.onlineStatus === 'online') {
     this.lastSeen = new Date();
+  }
+  
+  // Initialize emotionProfile if not exists
+  if (!this.emotionProfile) {
+    this.emotionProfile = {
+      emotionHistory: [],
+      dominantEmotions: new Map(),
+      averageComplexity: 0,
+      emotionalStability: 0.5,
+      lastUpdated: new Date()
+    };
   }
   
   next();
@@ -261,6 +302,10 @@ UserSchema.statics.getOnlineUsers = function() {
 
 UserSchema.statics.getUsersByEmotionalProfile = function(baseState) {
   return this.find({ 'emotionalProfile.baseState': baseState });
+};
+
+UserSchema.statics.getUsersByEmotionalStability = function(minStability = 0.5) {
+  return this.find({ 'emotionProfile.emotionalStability': { $gte: minStability } });
 };
 
 module.exports = mongoose.model('User', UserSchema);
