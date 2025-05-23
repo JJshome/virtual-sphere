@@ -9,7 +9,6 @@
 VirtualSphere는 **Ucaretron Inc.**가 개발한 혁신적인 특허 기술을 기반으로 하는 차세대 가상 소셜 네트워크 플랫폼입니다. 이 시스템은 개인별 LLM 인스턴스, 자율적 가상 휴먼 에이전트, 집단 상상력 기반 동적 세계 생성 등의 핵심 특허 기술을 구현합니다.
 
 > **⚖️ 특허 보호 기술**: 본 시스템의 핵심 기술들은 Ucaretron Inc.의 특허권으로 보호받고 있습니다. 
-> - **출원 번호**: KR-2024-XXXXXXX, US-2024-XXXXXXX, EP-2024-XXXXXXX
 > - **기술 분야**: LLM 기반 가상 소셜 네트워크, 가상 휴먼 에이전트, 집단 상상력 동적 세계
 
 ## 🚀 핵심 특허 기술
@@ -183,21 +182,6 @@ npm run lint           # ESLint 실행
 npm run lint:fix       # 자동 수정
 ```
 
-## 🐳 Docker 배포
-
-### 개발 환경
-```bash
-npm run docker:dev        # 개발 환경 실행
-npm run docker:dev:build  # 빌드 후 실행
-npm run docker:logs       # 로그 확인
-npm run docker:down       # 서비스 종료
-```
-
-### 운영 환경
-```bash
-npm run docker:prod       # 운영 환경 배포
-```
-
 ## 📊 성능 및 모니터링
 
 ### 시스템 헬스체크
@@ -218,15 +202,6 @@ curl http://localhost:5000/health  # API 서버 상태
 - **개인정보 보호**: GDPR 준수 데이터 처리
 - **블록체인 보안**: 멀티시그 지갑 및 스마트 컨트랙트 감사
 
-## 🤝 기여하기
-
-본 프로젝트는 Ucaretron Inc.의 특허 기술을 기반으로 하고 있습니다. 기여를 원하시는 경우:
-
-1. 이슈 생성 또는 기존 이슈 확인
-2. Fork 후 feature 브랜치 생성
-3. 특허 기술 표준 준수하여 개발
-4. Pull Request 제출
-
 ### 특허 기술 표준 준수 가이드라인
 - UPS (User Profile Standard) 준수
 - LIP (LLM Instance Protocol) 표준 구현
@@ -235,13 +210,8 @@ curl http://localhost:5000/health  # API 서버 상태
 - EAS (Emotion Analysis Standard) 준수
 - VAS (Virtual Asset Standard) 표준 적용
 
-## 📄 라이센스 및 특허 정보
-
-### 오픈소스 라이센스
-코드베이스의 일반적인 부분은 MIT 라이센스 하에 제공됩니다.
-
-### 특허 보호 기술
-핵심 특허 기술들은 Ucaretron Inc.의 지적재산권으로 보호받습니다:
+### 특허 기술
+핵심 특허 기술들은 Ucaretron Inc.의 지적재산권입니다.:
 
 - **개인별 LLM 인스턴스 시스템**
 - **자율적 가상 휴먼 에이전트 기술**  
@@ -249,19 +219,10 @@ curl http://localhost:5000/health  # API 서버 상태
 - **실시간 감정/상황 인식 엔진**
 - **블록체인 기반 가상 경제 시스템**
 
-상업적 사용을 위해서는 별도 라이센스 계약이 필요합니다.
-
-## 📞 연락처 및 지원
-
-- **프로젝트 관리자**: [@JJshome](https://github.com/JJshome)
-- **특허권자**: Ucaretron Inc.
-- **기술 지원**: [GitHub Issues](https://github.com/JJshome/virtual-sphere/issues)
-- **상업적 문의**: contact@ucaretron.com
-
 ---
 
 <div align="center">
-  <h3>🔬 VirtualSphere - 특허 기반 차세대 가상 소셜 네트워크</h3>
+  <h3>🔬 VirtualSphere - 차세대 가상 소셜 네트워크</h3>
   <p><strong>Powered by Ucaretron Inc. Patent Technology</strong></p>
   <p>🏆 <em>업계 표준을 재정의하는 혁신적인 AI 기술</em></p>
 </div>
