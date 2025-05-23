@@ -1,40 +1,71 @@
-const winston = require('winston');
-const { format, transports } = winston;
+/**
+ * Logger Utility - VirtualSphere System
+ * Winston 기반 로깅 시스템
+ */
 
-// 로그 포맷 설정
-const logFormat = format.combine(
-  format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-  format.printf(({ timestamp, level, message }) => {
-    return `${timestamp} [${level.toUpperCase()}]: ${message}`;
+const winston = require('winston');
+const path = require('path');
+
+// 로그 포맷 정의
+const logFormat = winston.format.combine(
+  winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+  winston.format.errors({ stack: true }),
+  winston.format.printf(({ timestamp, level, message, stack }) => {
+    return `${timestamp} [${level.toUpperCase()}]: ${stack || message}`;
   })
 );
 
 // 로거 생성
 const logger = winston.createLogger({
-  level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
+  level: process.env.LOG_LEVEL || 'info',
   format: logFormat,
   transports: [
-    // 콘솔 로그
-    new transports.Console({
-      format: format.combine(
-        format.colorize(),
+    // 콘솔 출력
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.colorize(),
         logFormat
       )
     }),
-    // 파일 로그
-    new transports.File({ filename: 'logs/error.log', level: 'error' }),
-    new transports.File({ filename: 'logs/combined.log' })
+    
+    // 파일 출력
+    new winston.transports.File({
+      filename: path.join(process.cwd(), 'logs', 'error.log'),
+      level: 'error',
+      maxsize: 5242880, // 5MB
+      maxFiles: 5
+    }),
+    
+    new winston.transports.File({
+      filename: path.join(process.cwd(), 'logs', 'combined.log'),
+      maxsize: 5242880, // 5MB
+      maxFiles: 5
+    })
   ],
+  
+  // 예외 처리
+  exceptionHandlers: [
+    new winston.transports.File({
+      filename: path.join(process.cwd(), 'logs', 'exceptions.log')
+    })
+  ],
+  
+  // 거부된 Promise 처리
+  rejectionHandlers: [
+    new winston.transports.File({
+      filename: path.join(process.cwd(), 'logs', 'rejections.log')
+    })
+  ]
 });
 
-// 개발 환경에서는 더 상세한 로그 출력
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(new transports.Console({
-    format: format.combine(
-      format.colorize(),
-      format.simple()
+// 개발 환경에서 더 자세한 로그
+if (process.env.NODE_ENV === 'development') {
+  logger.add(new winston.transports.Console({
+    format: winston.format.combine(
+      winston.format.colorize(),
+      winston.format.simple()
     )
   }));
 }
 
-module.exports = { logger };
+module.exports = logger;
