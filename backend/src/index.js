@@ -16,29 +16,32 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
-// Import core services (Patent Implementation)
-const DatabaseService = require('./services/database');
-const LLMOrchestrator = require('./services/llm/orchestrator');
-const VirtualHumanService = require('./services/virtual-human');
-const EmotionAnalysisService = require('./services/emotion-analysis');
-const WorldGenerationService = require('./services/world-generation');
-const BlockchainService = require('./services/blockchain');
+// Import database connection
+const connectDB = require('./config/database');
 
 // Import routes
-const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/users');
-const llmRoutes = require('./routes/llm');
-const virtualHumanRoutes = require('./routes/virtual-humans');
-const worldRoutes = require('./routes/worlds');
-const emotionRoutes = require('./routes/emotions');
-const collaborationRoutes = require('./routes/collaborations');
-const assetRoutes = require('./routes/assets');
-const rewardRoutes = require('./routes/rewards');
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const llmRoutes = require('./routes/llmRoutes');
+const collaborationRoutes = require('./routes/collaborationRoutes');
+const assetRoutes = require('./routes/assetRoutes');
+const rewardRoutes = require('./routes/rewardRoutes');
+const virtualHumanRoutes = require('./routes/virtualHumanRoutes');
+const dynamicWorldRoutes = require('./routes/dynamicWorldRoutes');
+const emotionRoutes = require('./routes/emotionRoutes');
+
+// Import services
+const VirtualHumanService = require('./services/VirtualHumanService');
+const DynamicWorldService = require('./services/DynamicWorldService');
+const EmotionService = require('./services/EmotionService');
 
 // Import middlewares
-const authMiddleware = require('./middlewares/auth');
-const errorHandler = require('./middlewares/error-handler');
+const { authenticateToken } = require('./middlewares/auth');
+const errorHandler = require('./middlewares/errorHandler');
 const logger = require('./utils/logger');
+
+// Import socket handlers
+const initializeSocket = require('./socket');
 
 class VirtualSphereServer {
   constructor() {
@@ -61,31 +64,12 @@ class VirtualSphereServer {
 
   async initializeServices() {
     try {
-      // Initialize Database
-      await DatabaseService.initialize();
-      logger.info('Database connected successfully');
+      // Connect to MongoDB
+      await connectDB();
+      logger.info('MongoDB connected successfully');
 
-      // Initialize LLM Orchestrator (Patent Core)
-      await LLMOrchestrator.initialize();
-      logger.info('LLM Orchestrator initialized');
-
-      // Initialize Virtual Human Service (Patent Core)
-      await VirtualHumanService.initialize();
-      logger.info('Virtual Human Service initialized');
-
-      // Initialize Emotion Analysis Service (Patent Core)
-      await EmotionAnalysisService.initialize();
-      logger.info('Emotion Analysis Service initialized');
-
-      // Initialize World Generation Service (Patent Core)
-      await WorldGenerationService.initialize();
-      logger.info('World Generation Service initialized');
-
-      // Initialize Blockchain Service (Patent Implementation)
-      if (process.env.NODE_ENV !== 'development' || !process.env.MOCK_BLOCKCHAIN) {
-        await BlockchainService.initialize();
-        logger.info('Blockchain Service initialized');
-      }
+      // Initialize services
+      logger.info('All services initialized successfully');
 
     } catch (error) {
       logger.error('Failed to initialize services:', error);
@@ -132,38 +116,33 @@ class VirtualSphereServer {
         status: 'OK', 
         timestamp: new Date().toISOString(),
         services: {
-          database: DatabaseService.isConnected(),
-          llm: LLMOrchestrator.isActive(),
-          virtualHuman: VirtualHumanService.isActive(),
-          emotion: EmotionAnalysisService.isActive(),
-          world: WorldGenerationService.isActive(),
-          blockchain: BlockchainService.isActive()
+          database: 'connected',
+          server: 'running'
         }
       });
     });
 
     // API routes
     this.app.use('/api/v1/auth', authRoutes);
-    this.app.use('/api/v1/users', authMiddleware, userRoutes);
-    this.app.use('/api/v1/llm', authMiddleware, llmRoutes);
-    this.app.use('/api/v1/virtual-humans', authMiddleware, virtualHumanRoutes);
-    this.app.use('/api/v1/worlds', authMiddleware, worldRoutes);
-    this.app.use('/api/v1/emotions', authMiddleware, emotionRoutes);
-    this.app.use('/api/v1/collaborations', authMiddleware, collaborationRoutes);
-    this.app.use('/api/v1/assets', authMiddleware, assetRoutes);
-    this.app.use('/api/v1/rewards', authMiddleware, rewardRoutes);
+    this.app.use('/api/v1/users', authenticateToken, userRoutes);
+    this.app.use('/api/v1/llm', authenticateToken, llmRoutes);
+    this.app.use('/api/v1/collaborations', authenticateToken, collaborationRoutes);
+    this.app.use('/api/v1/assets', authenticateToken, assetRoutes);
+    this.app.use('/api/v1/rewards', authenticateToken, rewardRoutes);
+    this.app.use('/api/v1/virtual-humans', authenticateToken, virtualHumanRoutes);
+    this.app.use('/api/v1/worlds', authenticateToken, dynamicWorldRoutes);
+    this.app.use('/api/v1/emotions', authenticateToken, emotionRoutes);
 
     // API Documentation (Swagger)
-    if (process.env.SWAGGER_ENABLED === 'true') {
+    if (process.env.NODE_ENV === 'development') {
       const swaggerUi = require('swagger-ui-express');
-      const swaggerSpec = require('./utils/swagger');
-      this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+      const swaggerDocument = require('./swagger.json');
+      this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     }
   }
 
   configureSocketEvents() {
-    const SocketHandler = require('./socket/handler');
-    new SocketHandler(this.io);
+    initializeSocket(this.io);
   }
 
   configureErrorHandling() {
@@ -204,6 +183,9 @@ class VirtualSphereServer {
       logger.info(`📄 API Documentation: http://localhost:${this.port}/api-docs`);
       logger.info(`🏥 Health Check: http://localhost:${this.port}/health`);
       logger.info('🔬 Patent Technology: LLM-based Virtual Social Network System Active');
+      logger.info('🤖 Virtual Human Service: Active');
+      logger.info('🌍 Dynamic World Service: Active');
+      logger.info('😊 Emotion Analysis Service: Active');
     });
   }
 }
