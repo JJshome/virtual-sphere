@@ -61,26 +61,9 @@ const virtualHuman = await VirtualHumanService.createVirtualHuman(userId, {
 
 ## 📋 시스템 아키텍처
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                    VirtualSphere Patent Architecture                        │
-├─────────────────────────────────────────────────────────────────────────────┤
-│  Frontend (React/Next.js)  │        Real-time Engine (Socket.IO)           │
-├─────────────────────────────────────────────────────────────────────────────┤
-│              Patent Core Services Layer (Node.js/Express)                  │
-├─────────────────────┬─────────────────┬─────────────────┬─────────────────┤
-│  Personal LLM       │  Virtual Human  │ Dynamic World   │ Emotion/Context │
-│  Orchestrator       │  Agent Service  │ Generation      │ Analysis        │
-├─────────────────────┼─────────────────┼─────────────────┼─────────────────┤
-│  User Matching      │  Collaboration  │ Blockchain      │ Reward System   │
-│  Engine             │  Engine         │ Service         │                 │
-├─────────────────────┴─────────────────┴─────────────────┴─────────────────┤
-│                      Data & Storage Layer                                  │
-├─────────────────────┬─────────────────┬─────────────────┬─────────────────┤
-│    MongoDB          │   Redis Cache   │   Blockchain    │   File Storage  │
-│   (Primary DB)      │   (Sessions)    │   (Assets)      │   (Media)       │
-└─────────────────────┴─────────────────┴─────────────────┴─────────────────┘
-```
+<div align="center">
+  <img src="https://raw.githubusercontent.com/JJshome/virtual-sphere/main/assets/virtualsphere-architecture.svg" width="800" alt="VirtualSphere Patent Architecture Diagram">
+</div>
 
 ## 🛠️ 기술 스택
 
