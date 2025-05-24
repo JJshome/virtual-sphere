@@ -1,22 +1,25 @@
 # VirtualSphere
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/JJshome/virtual-sphere/main/assets/virtual-sphere-logo.svg" width="700" alt="VirtualSphere Patent Technology Visualization">
+  <img src="https://raw.githubusercontent.com/JJshome/virtual-sphere/main/assets/virtual-sphere-logo.svg" width="700" alt="VirtualSphere Technology Visualization">
 </div>
 
-## 🔬 특허 기반 LLM 가상 소셜 네트워크 시스템
+## 🔬 LLM 가상 소셜 네트워크 시스템
 
-VirtualSphere는 **Ucaretron Inc.**가 개발한 혁신적인 특허 기술을 기반으로 하는 차세대 가상 소셜 네트워크 플랫폼입니다. 이 시스템은 개인별 LLM 인스턴스, 자율적 가상 휴먼 에이전트, 집단 상상력 기반 동적 세계 생성 등의 핵심 특허 기술을 구현합니다.
+VirtualSphere는 **Ucaretron Inc.**가 개발한 차세대 가상 소셜 네트워크 플랫폼입니다. 이 시스템은 개인별 LLM 인스턴스, 자율적 가상 휴먼 에이전트, 집단 상상력 기반 동적 세계 생성 등의 기술을 구현합니다.
 
-> **⚖️ 특허 보호 기술**: 본 시스템의 핵심 기술들은 Ucaretron Inc.의 특허권으로 보호받고 있습니다. 
 > - **기술 분야**: LLM 기반 가상 소셜 네트워크, 가상 휴먼 에이전트, 집단 상상력 동적 세계
+
+
+
 
 ## 🚀 핵심 특허 기술
 
 ### 1. 개인별 LLM 인스턴스 시스템 
 - **기술적 혁신**: 각 사용자마다 완전히 개인화된 LLM 인스턴스 생성
-- **특허 포인트**: 사용자 성향, 감정 패턴, 학습 이력을 반영한 동적 LLM 개인화
-- **표준화**: LLM Instance Protocol (LIP) 구현
+- **기술 포인트**: 사용자 성향, 감정 패턴, 학습 이력을 반영한 동적 LLM 개인화
+- 
+![각 사용자별 개인화 LLM 인스턴스 개념도](assets/personalized_llm_instances.png)
 
 ```javascript
 // 개인별 LLM 인스턴스 생성 예시
@@ -30,7 +33,7 @@ const personalLLM = await LLMOrchestrator.createPersonalLLMInstance(userId, {
 
 ### 2. 자율적 가상 휴먼 에이전트 
 - **기술적 혁신**: 사용자를 대신하여 자율적으로 활동하는 지능형 가상 휴먼
-- **특허 포인트**: 사용자 부재 시에도 지속적인 소셜 활동 및 학습 수행
+- **기술 포인트**: 사용자 부재 시에도 지속적인 소셜 활동 및 학습 수행
 - **표준화**: Virtual Human Agent Protocol (VHAP) 구현
 
 ```javascript
@@ -45,12 +48,12 @@ const virtualHuman = await VirtualHumanService.createVirtualHuman(userId, {
 
 ### 3. 집단 상상력 기반 동적 세계 생성 
 - **기술적 혁신**: 사용자들의 집단 상상력을 실시간으로 가상 세계에 반영
-- **특허 포인트**: 다중 센서 융합 및 감정 인식을 통한 동적 환경 변화
+- **기술 포인트**: 다중 센서 융합 및 감정 인식을 통한 동적 환경 변화
 - **표준화**: Dynamic World State Protocol (DWSP) 구현
 
 ### 4. 실시간 감정/상황 인식 시스템 🆕
 - **기술적 혁신**: 사용자의 감정과 상황을 실시간 분석하여 맞춤형 반응 제공  
-- **특허 포인트**: CNN-LSTM 하이브리드 모델을 통한 다중 모달 감정 분석
+- **기술 포인트**: CNN-LSTM 하이브리드 모델을 통한 다중 모달 감정 분석
 - **표준화**: Emotion Analysis Standard (EAS) 구현
 
 #### 감정 분석 기능 상세
@@ -91,7 +94,7 @@ const emotionData = await EmotionService.processEmotion({
 
 ### 5. 블록체인 기반 가상 경제 시스템
 - **기술적 혁신**: 협업 성과를 NFT로 보상하는 탈중앙화 경제 시스템
-- **특허 포인트**: 가상 자산의 실제 경제적 가치 연동 메커니즘
+- **기술 포인트**: 가상 자산의 실제 경제적 가치 연동 메커니즘
 - **표준화**: Virtual Asset Standard (VAS) 구현
 
 ## 📋 시스템 아키텍처
@@ -248,7 +251,7 @@ curl http://localhost:5000/health  # API 서버 상태
 - **감정 데이터 프라이버시**: 익명화 옵션 및 선택적 공유
 - **블록체인 보안**: 멀티시그 지갑 및 스마트 컨트랙트 감사
 
-### 특허 기술 표준 준수 가이드라인
+### 기술 표준 준수 가이드라인
 - UPS (User Profile Standard) 준수
 - LIP (LLM Instance Protocol) 표준 구현
 - VHAP (Virtual Human Agent Protocol) 준수
