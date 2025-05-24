@@ -1,7 +1,7 @@
 # VirtualSphere
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/JJshome/virtual-sphere/main/assets/virtual-sphere-logo.svg" width="700" alt="VirtualSphere Technology Visualization">
+  <img src="https://raw.githubusercontent.com/JJshome/virtual-sphere/main/assets/llm_connected.jpg" width="700" alt="VirtualSphere Technology Visualization">
 </div>
 
 ## 🔬 LLM 가상 소셜 네트워크 시스템
