@@ -265,6 +265,6 @@ curl http://localhost:5000/health  # API 서버 상태
 
 <div align="center">
   <h3>🔬 VirtualSphere - 차세대 가상 소셜 네트워크</h3>
-  <p><strong>Powered by Ucaretron Inc. Patent Technology</strong></p>
+  <p><strong>Powered by JJ Ideas </strong></p>
   <p>🏆 <em>업계 표준을 재정의하는 혁신적인 AI 기술</em></p>
 </div>
