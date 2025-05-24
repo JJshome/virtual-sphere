@@ -19,7 +19,7 @@ VirtualSphere는 **Ucaretron Inc.**가 개발한 차세대 가상 소셜 네트�
 - **기술적 혁신**: 각 사용자마다 완전히 개인화된 LLM 인스턴스 생성
 - **기술 포인트**: 사용자 성향, 감정 패턴, 학습 이력을 반영한 동적 LLM 개인화
 - 
-![각 사용자별 개인화 LLM 인스턴스 개념도](assets/personalized_llm_instances.png)
+![각 사용자별 개인화 LLM 인스턴스 개념도](assets/personalized_llm_instances.jpg)
 
 ```javascript
 // 개인별 LLM 인스턴스 생성 예시
