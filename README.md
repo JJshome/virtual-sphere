@@ -56,6 +56,8 @@ const virtualHuman = await VirtualHumanService.createVirtualHuman(userId, {
 - **기술 포인트**: CNN-LSTM 하이브리드 모델을 통한 다중 모달 감정 분석
 - **표준화**: Emotion Analysis Standard (EAS) 구현
 
+![실시간 감정/상황 인식 시스템 개념도](assets/emotion.jpg)
+
 #### 감정 분석 기능 상세
 - **다중 모달 입력**: 얼굴 표정, 음성, 텍스트, 생체 신호 통합 분석
 - **실시간 처리**: GPT-4 Vision 및 커스텀 ML 모델을 활용한 즉각적 감정 인식
