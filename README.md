@@ -6,14 +6,14 @@
 
 ## 🔬 LLM 가상 소셜 네트워크 시스템
 
-VirtualSphere는 **Ucaretron Inc.**가 개발한 차세대 가상 소셜 네트워크 플랫폼입니다. 이 시스템은 개인별 LLM 인스턴스, 자율적 가상 휴먼 에이전트, 집단 상상력 기반 동적 세계 생성 등의 기술을 구현합니다.
+VirtualSphere는 차세대 가상 소셜 네트워크 플랫폼입니다. 이 시스템은 개인별 LLM 인스턴스, 자율적 가상 휴먼 에이전트, 집단 상상력 기반 동적 세계 생성 등의 기술을 구현합니다.
 
 > - **기술 분야**: LLM 기반 가상 소셜 네트워크, 가상 휴먼 에이전트, 집단 상상력 동적 세계
 
 
 
 
-## 🚀 핵심 특허 기술
+## 🚀 핵심 기술
 
 ### 1. 개인별 LLM 인스턴스 시스템 
 - **기술적 혁신**: 각 사용자마다 완전히 개인화된 LLM 인스턴스 생성
@@ -171,7 +171,7 @@ npm run docker:dev
 - **Health Check**: http://localhost:5000/health
 - **Emotion Dashboard**: http://localhost:3000/emotion
 
-## 📖 특허 기술 문서
+## 📖 기술 문서
 
 ### API 표준화
 ```
@@ -259,14 +259,7 @@ curl http://localhost:5000/health  # API 서버 상태
 - EAS (Emotion Analysis Standard) 준수
 - VAS (Virtual Asset Standard) 표준 적용
 
-### 특허 기술
-핵심 특허 기술들은 Ucaretron Inc.의 지적재산권입니다.:
-
-- **개인별 LLM 인스턴스 시스템**
-- **자율적 가상 휴먼 에이전트 기술**  
-- **집단 상상력 기반 동적 세계 생성**
-- **실시간 감정/상황 인식 엔진**
-- **블록체인 기반 가상 경제 시스템**
+### Patent Filed
 
 ---
 
